@@ -13,13 +13,19 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
+          cache: npm
 
       - name: Install dependencies
         run: npm install
 
       - name: Install EAS CLI
         run: npm install -g eas-cli
+
+      - name: Link Expo project
+        run: eas init --force --non-interactive
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
 
       - name: Build APK
         run: eas build --platform android --profile preview --non-interactive
